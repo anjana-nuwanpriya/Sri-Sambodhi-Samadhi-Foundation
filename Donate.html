@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate - Sri Sambodhi Samadhi Foundation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: transparent;
+            padding: 15px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled .logo {
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav.scrolled .nav-links a {
+            color: #333;
+        }
+
+        .nav-links a:hover {
+            color: #0095ff;
+        }
+
+        .donate-btn {
+            background: #0095ff;
+            color: white !important;
+            padding: 10px 28px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .donate-btn:hover {
+            background: #0077cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 149, 255, 0.3);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled .hamburger span {
+            background: #333;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: #fff;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.4s ease;
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-menu li {
+            margin: 20px 0;
+        }
+
+        .mobile-menu a {
+            color: #333;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: #0095ff;
+        }
+
+        .mobile-menu .donate-btn {
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('Foundation photo/IMG_6801.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .page-hero-content {
+            max-width: 700px;
+            padding: 0 20px;
+        }
+
+        .page-hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .page-hero p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            background: #f8f9fa;
+            padding: 20px 50px;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: #0095ff;
+            text-decoration: none;
+        }
+
+        .breadcrumb span {
+            margin: 0 10px;
+            color: #999;
+        }
+
+        /* Donate Section */
+        .donate-section {
+            padding: 80px 50px;
+            background: #fff;
+        }
+
+        .donate-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        /* Donation Form */
+        .donation-form-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .donation-form-card h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .donation-form-card .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        /* Amount Selection */
+        .amount-section {
+            margin-bottom: 30px;
+        }
+
+        .amount-section label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .amount-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .amount-btn {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .amount-btn:hover {
+            border-color: #0095ff;
+            color: #0095ff;
+        }
+
+        .amount-btn.active {
+            border-color: #0095ff;
+            background: #0095ff;
+            color: white;
+        }
+
+        .custom-amount {
+            position: relative;
+        }
+
+        .custom-amount span {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-weight: 600;
+        }
+
+        .custom-amount input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .custom-amount input:focus {
+            outline: none;
+            border-color: #0095ff;
+        }
+
+        /* Donation Type */
+        .donation-type {
+            margin-bottom: 30px;
+        }
+
+        .donation-type label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .type-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .type-btn {
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .type-btn i {
+            font-size: 18px;
+        }
+
+        .type-btn:hover {
+            border-color: #0095ff;
+            color: #0095ff;
+        }
+
+        .type-btn.active {
+            border-color: #0095ff;
+            background: #0095ff;
+            color: white;
+        }
+
+        /* Form Fields */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0095ff;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Cause Selection */
+        .cause-select {
+            margin-bottom: 25px;
+        }
+
+        .cause-select label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .cause-select select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: inherit;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        .cause-select select:focus {
+            outline: none;
+            border-color: #0095ff;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #0095ff;
+        }
+
+        .checkbox-group label {
+            font-size: 14px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: #0095ff;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #0077cc;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 149, 255, 0.4);
+        }
+
+        .submit-btn i {
+            font-size: 18px;
+        }
+
+        /* Secure Badge */
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .secure-badge i {
+            color: #28a745;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .payment-methods img {
+            height: 30px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .payment-methods img:hover {
+            opacity: 1;
+        }
+
+        /* Info Cards */
+        .donation-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .info-card h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card h3 i {
+            color: #0095ff;
+        }
+
+        .info-card p {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .info-card ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .info-card li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .info-card li:last-child {
+            border-bottom: none;
+        }
+
+        .info-card li i {
+            color: #0095ff;
+            width: 20px;
+        }
+
+        /* Impact Stats */
+        .impact-card {
+            background: linear-gradient(135deg, #0095ff, #00d4ff);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .impact-card h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .impact-card h3 i {
+            color: white;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .impact-stat {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+        }
+
+        .impact-stat h4 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .impact-stat p {
+            font-size: 12px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Bank Transfer Info */
+        .bank-info {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .bank-info h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bank-info h3 i {
+            color: #0095ff;
+        }
+
+        .bank-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .bank-details p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bank-details p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bank-details strong {
+            color: #333;
+        }
+
+        .bank-details span {
+            color: #666;
+        }
+
+        .copy-btn {
+            background: #0095ff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #0077cc;
+        }
+
+        /* Footer */
+        footer {
+            background: #2a3f54;
+            color: white;
+            padding: 70px 50px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 50px;
+        }
+
+        .footer-about h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .footer-about p {
+            line-height: 1.8;
+            color: #b8c5d6;
+            font-size: 14px;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: #b8c5d6;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: #0095ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #3d5266;
+            color: #b8c5d6;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav {
+                padding: 15px 30px;
+            }
+
+            .donate-section {
+                padding: 60px 30px;
+            }
+
+            .donate-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .donation-info {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .page-hero h1 {
+                font-size: 36px;
+            }
+
+            .breadcrumb {
+                padding: 15px 20px;
+            }
+
+            .donate-section {
+                padding: 50px 20px;
+            }
+
+            .donation-form-card {
+                padding: 30px 25px;
+            }
+
+            .amount-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            footer {
+                padding: 50px 30px 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 12px 20px;
+            }
+
+            .logo {
+                font-size: 11px;
+            }
+
+            .page-hero {
+                height: 45vh;
+            }
+
+            .page-hero h1 {
+                font-size: 28px;
+            }
+
+            .page-hero p {
+                font-size: 15px;
+            }
+
+            .donation-form-card h2 {
+                font-size: 24px;
+            }
+
+            .amount-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .type-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-stat h4 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Sri Sambodhi Samadhi Foundation</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <!-- <li><a href="index.html#causes">Causes</a></li>
+            <li><a href="index.html#gallery">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li> -->
+            <li><a href="donate.html" class="donate-btn">Donate</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <!-- <li><a href="index.html#causes">Causes</a></li>
+            <li><a href="index.html#gallery">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li> -->
+            <li><a href="donate.html" class="donate-btn">Donate</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Make a Donation</h1>
+            <p>Your generosity helps us transform lives and build stronger communities across Sri Lanka</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span>Donate</span>
+    </div>
+
+    <!-- Donate Section -->
+    <section class="donate-section">
+        <div class="donate-container">
+            <!-- Donation Form -->
+            <div class="donation-form-card">
+                <h2>Support Our Mission</h2>
+                <p class="subtitle">Every contribution makes a difference in someone's life</p>
+
+                <form id="donationForm">
+                    <!-- Amount Selection -->
+                    <div class="amount-section">
+                        <label>Select Donation Amount (LKR)</label>
+                        <div class="amount-buttons">
+                            <button type="button" class="amount-btn" data-amount="1000">Rs. 1,000</button>
+                            <button type="button" class="amount-btn" data-amount="2500">Rs. 2,500</button>
+                            <button type="button" class="amount-btn active" data-amount="5000">Rs. 5,000</button>
+                            <button type="button" class="amount-btn" data-amount="10000">Rs. 10,000</button>
+                            <button type="button" class="amount-btn" data-amount="25000">Rs. 25,000</button>
+                            <button type="button" class="amount-btn" data-amount="50000">Rs. 50,000</button>
+                        </div>
+                        <div class="custom-amount">
+                            <span>Rs.</span>
+                            <input type="number" id="customAmount" placeholder="Enter custom amount">
+                        </div>
+                    </div>
+
+                    <!-- Donation Type -->
+                    <div class="donation-type">
+                        <label>Donation Type</label>
+                        <div class="type-buttons">
+                            <button type="button" class="type-btn active" data-type="one-time">
+                                <i class="fas fa-hand-holding-heart"></i> One-time
+                            </button>
+                            <button type="button" class="type-btn" data-type="monthly">
+                                <i class="fas fa-sync-alt"></i> Monthly
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cause Selection -->
+                    <div class="cause-select">
+                        <label>Select a Cause (Optional)</label>
+                        <select name="cause" id="cause">
+                            <option value="">Where it's needed most</option>
+                            <option value="education">Education & Schools</option>
+                            <option value="vocational">Vocational Training</option>
+                            <option value="community">Community Development</option>
+                            <option value="healthcare">Healthcare Support</option>
+                            <option value="emergency">Emergency Relief</option>
+                        </select>
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First Name *</label>
+                            <input type="text" name="firstName" required placeholder="Your first name">
+                        </div>
+                        <div class="form-group">
+                            <label>Last Name *</label>
+                            <input type="text" name="lastName" required placeholder="Your last name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" name="email" required placeholder="your@email.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" name="phone" placeholder="+94 XX XXX XXXX">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Message (Optional)</label>
+                        <textarea name="message" rows="3" placeholder="Leave a message with your donation..."></textarea>
+                    </div>
+
+                    <!-- Anonymous Checkbox -->
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="anonymous" name="anonymous">
+                        <label for="anonymous">Make this donation anonymous</label>
+                    </div>
+
+                    <!-- Hidden field for amount -->
+                    <input type="hidden" id="selectedAmount" name="amount" value="5000">
+                    <input type="hidden" id="donationType" name="donationType" value="one-time">
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-lock"></i> Proceed to Payment
+                    </button>
+
+                    <!-- Secure Badge -->
+                    <div class="secure-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Your payment is secure and encrypted</span>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa" style="font-size: 32px; color: #1a1f71;"></i>
+                        <i class="fab fa-cc-mastercard" style="font-size: 32px; color: #eb001b;"></i>
+                        <i class="fab fa-cc-amex" style="font-size: 32px; color: #006fcf;"></i>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Donation Info -->
+            <div class="donation-info">
+                <!-- Impact Card -->
+                <div class="impact-card">
+                    <h3><i class="fas fa-chart-line"></i> Your Impact</h3>
+                    <div class="impact-stats">
+                        <div class="impact-stat">
+                            <h4>1M+</h4>
+                            <p>Lives Changed</p>
+                        </div>
+                        <div class="impact-stat">
+                            <h4>1000+</h4>
+                            <p>Villages</p>
+                        </div>
+                        <div class="impact-stat">
+                            <h4>22</h4>
+                            <p>Districts</p>
+                        </div>
+                        <div class="impact-stat">
+                            <h4>20+</h4>
+                            <p>Years</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How Your Donation Helps -->
+                <div class="info-card">
+                    <h3><i class="fas fa-hand-holding-heart"></i> How Your Donation Helps</h3>
+                    <p>Your contribution directly supports our programs and the communities we serve.</p>
+                    <ul>
+                        <li><i class="fas fa-graduation-cap"></i> Rs. 1,000 provides school supplies for a child</li>
+                        <li><i class="fas fa-utensils"></i> Rs. 2,500 feeds a family for a week</li>
+                        <li><i class="fas fa-book"></i> Rs. 5,000 sponsors a month of education</li>
+                        <li><i class="fas fa-tools"></i> Rs. 10,000 supports vocational training</li>
+                        <li><i class="fas fa-home"></i> Rs. 25,000 helps rebuild a classroom</li>
+                    </ul>
+                </div>
+
+                <!-- Bank Transfer Info -->
+                <div class="bank-info">
+                    <h3><i class="fas fa-university"></i> Bank Transfer Details</h3>
+                    <p style="color: #666; font-size: 14px; margin-bottom: 15px;">Prefer to donate via bank transfer? Use the details below:</p>
+                    <div class="bank-details">
+                        <p><strong>Bank Name:</strong> <span>Bank of Ceylon</span></p>
+                        <p><strong>Account Name:</strong> <span>Sri Sambodhi Samadhi Foundation</span></p>
+                        <p><strong>Account No:</strong> <span>XXXX XXXX XXXX</span></p>
+                        <p><strong>Branch:</strong> <span>Monaragala</span></p>
+                        <p><strong>Swift Code:</strong> <span>BABORLKX</span></p>
+                    </div>
+                    <button class="copy-btn" onclick="copyBankDetails()">
+                        <i class="fas fa-copy"></i> Copy Details
+                    </button>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="info-card">
+                    <h3><i class="fas fa-question-circle"></i> Need Help?</h3>
+                    <p>If you have any questions about donating or would like to discuss other ways to support us, please contact us:</p>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +94 XX XXX XXXX</li>
+                        <li><i class="fas fa-envelope"></i> donate@foundation.lk</li>
+                        <li><i class="fas fa-clock"></i> Mon - Fri: 9:00 AM - 5:00 PM</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-about">
+                <h3>Sri Sambodhi Samadhi Foundation</h3>
+                <p>We are committed to empowering rural communities across Sri Lanka through education, training, and sustainable development programs. Together, we can build a brighter future for all.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <!-- <li><a href="index.html#causes">Causes</a></li>
+                    <li><a href="index.html#gallery">Gallery</a></li>
+                    <li><a href="index.html#contact">Contact</a></li> -->
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sri Sambodhi Samadhi Foundation. All Rights Reserved. | Designed with ❤️ ZIP SOLUTIONS</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Amount Button Selection
+        const amountBtns = document.querySelectorAll('.amount-btn');
+        const customAmountInput = document.getElementById('customAmount');
+        const selectedAmountInput = document.getElementById('selectedAmount');
+
+        amountBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                amountBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                customAmountInput.value = '';
+                selectedAmountInput.value = btn.dataset.amount;
+            });
+        });
+
+        customAmountInput.addEventListener('input', () => {
+            amountBtns.forEach(b => b.classList.remove('active'));
+            selectedAmountInput.value = customAmountInput.value;
+        });
+
+        // Donation Type Selection
+        const typeBtns = document.querySelectorAll('.type-btn');
+        const donationTypeInput = document.getElementById('donationType');
+
+        typeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                typeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                donationTypeInput.value = btn.dataset.type;
+            });
+        });
+
+        // Form Submission
+        const donationForm = document.getElementById('donationForm');
+        
+        donationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const amount = selectedAmountInput.value;
+            const donationType = donationTypeInput.value;
+            const firstName = donationForm.querySelector('[name="firstName"]').value;
+            const lastName = donationForm.querySelector('[name="lastName"]').value;
+            const email = donationForm.querySelector('[name="email"]').value;
+            const phone = donationForm.querySelector('[name="phone"]').value;
+            const cause = donationForm.querySelector('[name="cause"]').value;
+            const message = donationForm.querySelector('[name="message"]').value;
+            const anonymous = donationForm.querySelector('[name="anonymous"]').checked;
+
+            // Validate amount
+            if (!amount || amount <= 0) {
+                alert('Please select or enter a valid donation amount.');
+                return;
+            }
+
+            // Prepare data for payment gateway
+            const donationData = {
+                amount: amount,
+                currency: 'LKR',
+                donationType: donationType,
+                donor: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    anonymous: anonymous
+                },
+                cause: cause || 'General Fund',
+                message: message
+            };
+
+            console.log('Donation Data:', donationData);
+
+            // ============================================
+            // PAYMENT GATEWAY INTEGRATION POINT
+            // ============================================
+            // Replace the code below with your payment gateway integration
+            // 
+            // Example for PayHere (Sri Lanka):
+            // payhere.startPayment({
+            //     sandbox: true, // Set to false for production
+            //     merchant_id: "YOUR_MERCHANT_ID",
+            //     return_url: "https://yoursite.com/return",
+            //     cancel_url: "https://yoursite.com/cancel",
+            //     notify_url: "https://yoursite.com/notify",
+            //     order_id: "ORDER_" + Date.now(),
+            //     items: "Donation to Sri Sambodhi Samadhi Foundation",
+            //     amount: amount,
+            //     currency: "LKR",
+            //     first_name: firstName,
+            //     last_name: lastName,
+            //     email: email,
+            //     phone: phone,
+            //     address: "",
+            //     city: "",
+            //     country: "Sri Lanka"
+            // });
+            //
+            // Example for Stripe:
+            // const stripe = Stripe('YOUR_PUBLISHABLE_KEY');
+            // stripe.redirectToCheckout({
+            //     lineItems: [{price: 'PRICE_ID', quantity: 1}],
+            //     mode: donationType === 'monthly' ? 'subscription' : 'payment',
+            //     successUrl: 'https://yoursite.com/success',
+            //     cancelUrl: 'https://yoursite.com/cancel',
+            // });
+            // ============================================
+
+            // Temporary: Show confirmation
+            alert(`Thank you for your donation of Rs. ${parseInt(amount).toLocaleString()}!\n\nPayment gateway integration pending.\n\nDonor: ${firstName} ${lastName}\nEmail: ${email}`);
+        });
+
+        // Copy Bank Details
+        function copyBankDetails() {
+            const bankDetails = `Bank Name: Bank of Ceylon
+Account Name: Sri Sambodhi Samadhi Foundation
+Account No: XXXX XXXX XXXX
+Branch: Monaragala
+Swift Code: BABORLKX`;
+
+            navigator.clipboard.writeText(bankDetails).then(() => {
+                alert('Bank details copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+    </script>
+</body>
+</html>
